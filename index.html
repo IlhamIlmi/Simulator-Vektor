@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simulator Vektor 2D</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📐</text></svg>">
+<title>Simulator Vektor 2D - Mobile Responsive</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -82,6 +81,7 @@ canvas.panning{cursor:grabbing}
 .zoom-btns{position:absolute;bottom:70px;right:16px;display:flex;flex-direction:column;gap:8px}
 .z-btn{width:38px;height:38px;background:var(--badge-bg);backdrop-filter:blur(10px);border:1px solid var(--border2);border-radius:8px;color:var(--text2);font-size:20px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;user-select:none}
 .z-btn:hover{background:var(--surface2);color:var(--text)}
+.z-hint{position:absolute;bottom:16px;right:16px;font-family:'Fira Code',monospace;font-size:11px;color:var(--text3);text-align:right;pointer-events:none; background:var(--badge-bg); padding:6px 10px; border-radius:6px;}
 
 .panel{grid-area:pnl;background:var(--surface);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden; transition: background 0.3s, border-color 0.3s;}
 .panel-tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;}
@@ -125,34 +125,30 @@ canvas.panning{cursor:grabbing}
 .anim-bar{height:4px;background:var(--surface3);border-radius:2px;overflow:hidden;}
 .anim-prog{height:100%;width:0%;background:linear-gradient(90deg,var(--blue),var(--purple));border-radius:2px;transition:width .04s linear}
 
-/* ALGEBRA (INTERACTIVE) */
 .alg-section{background:var(--surface3);border:1px solid var(--border);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:10px;}
 .alg-section h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);font-family:'Fira Code',monospace}
 .alg-step{background:var(--surface);border-left:3px solid var(--border2);border-radius:0 8px 8px 0;padding:10px 14px;font-family:'Fira Code',monospace;font-size:13px;color:var(--text2);line-height:1.9; transition: background 0.2s, border-color 0.2s;}
 .alg-step[onmouseenter] { cursor: pointer; }
 .alg-step[onmouseenter]:hover { background: var(--surface2); }
-
 .alg-step .step-num{color:var(--text3);font-size:10px;display:block;margin-bottom:6px;letter-spacing:1px;text-transform:uppercase;font-family:'Inter',sans-serif;font-weight:700;}
 .alg-step .formula{color:var(--text);font-size:13px; display:flex; align-items:center; gap:6px; flex-wrap:wrap;}
 .alg-step .result-line{margin-top:8px;padding-top:8px;border-top:1px solid var(--border);font-weight:700;font-size:14px; display:flex; align-items:center; gap:6px;}
 .alg-box{background:var(--bg);border:1px solid;border-radius:9px;padding:12px 14px;text-align:center;font-family:'Fira Code',monospace;font-size:14px;font-weight:700;margin:4px 0; display:flex; align-items:center; justify-content:center; gap:6px;}
 
-/* CHALLENGE MODE UI */
 .challenge-box { background:var(--surface3); padding:16px; border-radius:10px; text-align:center; border: 2px dashed var(--border2); transition: all 0.3s;}
 .ch-target-text { font-size:22px; font-weight:800; color:var(--text); display:flex; justify-content:center; align-items:center; gap:8px;}
 .ch-success { display:none; background:var(--green2); color:white; padding:14px; border-radius:10px; text-align:center; font-weight:800; font-size:15px; margin-top:12px; box-shadow: 0 4px 15px rgba(0,200,100,0.2); animation: popIn 0.4s cubic-bezier(0.2,1,0.3,1);}
 
-/* POPUP */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:1000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);animation:fadeIn .3s ease;display:none;}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes fadeOut{from{opacity:1}to{opacity:0}}
-.popup{background:var(--surface);border:1px solid var(--border2);border-radius:22px;max-width:520px;width:92%;padding:30px;box-shadow:0 0 80px rgba(77,158,255,.1),0 24px 60px rgba(0,0,0,.7);animation:popIn .38s cubic-bezier(.22,1,.36,1);max-height:90vh;overflow-y:auto}
+.popup{background:var(--surface);border:1px solid var(--border2);border-radius:22px;max-width:520px;width:92%;padding:30px;box-shadow:0 0 80px rgba(77,158,255,.1); animation:popIn .38s cubic-bezier(.22,1,.36,1); max-height:90vh; overflow-y:auto;}
 .popup::-webkit-scrollbar{width:6px}
 .popup::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 @keyframes popIn{from{opacity:0;transform:scale(.88) translateY(20px)}to{opacity:1;transform:none}}
 .pop-hdr{display:flex;align-items:center;gap:12px;margin-bottom:22px}
 .pop-icon{font-size:32px}
-.pop-title{font-size:22px;font-weight:800;background:linear-gradient(120deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.pop-title{font-size:22px;font-weight:800;background:linear-gradient(120deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .pop-sub{font-size:12px;color:var(--text3);font-family:'Fira Code',monospace;font-weight:600;}
 .guide-list{display:flex;flex-direction:column;gap:12px;margin-bottom:24px}
 .guide-item{display:flex;align-items:flex-start;gap:14px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px}
@@ -161,6 +157,37 @@ canvas.panning{cursor:grabbing}
 .guide-text p{font-size:13px;color:var(--text2);line-height:1.6}
 .btn-start{width:100%;background:linear-gradient(130deg,var(--blue2),var(--purple2));border:none;border-radius:12px;color:#fff;font-family:'Inter',sans-serif;font-weight:700;font-size:15px;padding:16px;cursor:pointer;}
 .btn-start:hover{opacity:.88}
+
+/* ─── CSS MOBILE RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 45vh 1fr;
+    grid-template-areas: "hdr" "cvs" "pnl";
+  }
+  header { flex-direction: column; padding: 12px; gap: 12px; text-align: center; }
+  .h-title { font-size: 17px; }
+  .stats { width: 100%; justify-content: space-evenly; }
+  .header-btns { width: 100%; justify-content: space-between; }
+  .header-btns .h-btn { flex: 1; text-align: center; }
+  
+  .panel { border-left: none; border-top: 1px solid var(--border); }
+  .panel-tabs { overflow-x: auto; }
+  .tab { padding: 12px 10px; font-size: 11px; white-space: nowrap; }
+  
+  .c-badge { font-size: 10px; padding: 6px 10px; top: 10px; left: 10px; }
+  .c-result { font-size: 11px; padding: 8px 12px; bottom: 10px; left: 10px; right: 10px; }
+  .zoom-btns { bottom: 50px; right: 10px; gap: 6px; }
+  .z-btn { width: 32px; height: 32px; font-size: 16px; }
+  .z-hint { display: none; } /* Sembunyikan text hint panjang di HP */
+  
+  .srow { grid-template-columns: 20px 1fr; }
+  .nin { font-size: 13px; padding: 8px; }
+  .op-sel { font-size: 12px; padding: 10px; }
+  
+  .card { padding: 12px; }
+  .ang span { font-size: 12px; }
+}
 </style>
 </head>
 <body>
@@ -171,33 +198,33 @@ canvas.panning{cursor:grabbing}
       <span class="pop-icon">📐</span>
       <div>
         <div class="pop-title">Simulator Vektor 2D</div>
-        <div class="pop-sub">Panduan Penggunaan Aplikasi</div>
+        <div class="pop-sub">Panduan Interaksi & Sentuhan</div>
       </div>
     </div>
     <div class="guide-list">
       <div class="guide-item">
-        <span class="guide-icon">⚙️</span>
+        <span class="guide-icon">👆</span>
         <div class="guide-text">
-          <h4>1. Pilih Operasi</h4>
-          <p>Tentukan operasi aljabar yang ingin divisualisasikan. Form input akan menyesuaikan secara otomatis.</p>
+          <h4>Geser Langsung (Drag & Drop)</h4>
+          <p>Kini Anda tidak harus mengetik angka! <b>Sentuh dan tarik ujung panah vektor di layar</b>. Angka pada panel akan berubah secara *real-time*.</p>
         </div>
       </div>
       <div class="guide-item">
-        <span class="guide-icon">🎛️</span>
+        <span class="guide-icon">✨</span>
         <div class="guide-text">
-          <h4>2. Atur Komponen Vektor</h4>
-          <p>Ubah nilai komponen pada vektor kolom. Nilai akan otomatis dipetakan ke bidang Kartesius dengan sistem Auto-Scale.</p>
+          <h4>Highlight Geometris Otomatis</h4>
+          <p>Masuk ke tab <b>Aljabar</b> dan sentuh baris rumus. Vektor yang sedang dihitung akan <b>menyala terang</b> di layar untuk memudahkan pemahaman.</p>
         </div>
       </div>
       <div class="guide-item">
-        <span class="guide-icon">🧮</span>
+        <span class="guide-icon">🏆</span>
         <div class="guide-text">
-          <h4>3. Analisis Aljabar</h4>
-          <p>Buka tab <code>Aljabar</code> di panel kanan untuk melihat langkah-langkah perhitungan dengan notasi vektor kolom yang baku.</p>
+          <h4>Mode Tantangan Mandiri</h4>
+          <p>Terdapat tab <b>Latihan</b>. Uji pemahaman spasial Anda dengan menyelesaikan soal target koordinat yang diberikan secara acak!</p>
         </div>
       </div>
     </div>
-    <button class="btn-start" onclick="closePopup()">🚀 &nbsp;Mulai Eksplorasi!</button>
+    <button class="btn-start" onclick="closePopup()">🚀 &nbsp;Mulai Bermain!</button>
   </div>
 </div>
 
@@ -206,7 +233,7 @@ canvas.panning{cursor:grabbing}
   <header>
     <div>
       <div class="h-title">⟨ Simulator Vektor 2D ⟩</div>
-      <div class="h-sub">Interaktif · Highlight · Auto-Scale</div>
+      <div class="h-sub">Interaktif · Sentuhan · Auto-Scale</div>
     </div>
     <div class="stats">
       <div class="stat"><label>|u|</label><span id="mag-u" style="color:var(--blue)">3.61</span></div>
@@ -228,7 +255,7 @@ canvas.panning{cursor:grabbing}
       <button class="z-btn" onclick="zoomBy(0.82)" title="Zoom Out">−</button>
       <button class="z-btn" onclick="resetView()" title="Auto-Fit Ulang" style="font-size:16px">⌂</button>
     </div>
-    <div class="z-hint">Hint: Klik & Tarik ujung panah vektor!</div>
+    <div class="z-hint">Hint: Sentuh & Tarik panah vektor!</div>
   </div>
 
   <div class="panel">
@@ -239,7 +266,6 @@ canvas.panning{cursor:grabbing}
     </div>
 
     <div class="tab-body active" id="tab-kontrol">
-      
       <div class="card" id="grp-op" style="border-color:var(--border2); background:var(--surface3)">
         <div class="card-title" style="color:var(--text)">1. Pilih Operasi</div>
         <select class="op-sel" id="op-sel" onchange="updateUI(); upd();">
@@ -312,7 +338,7 @@ canvas.panning{cursor:grabbing}
 
     <div class="tab-body" id="tab-aljabar">
       <div style="font-size:11px; color:var(--text2); text-align:center; margin-bottom:-5px;">
-        *Hover (arahkan kursor) pada rumus di bawah ini untuk melihat Highlight di Kanvas.
+        *Sentuh/Hover pada rumus di bawah ini untuk Highlight di Kanvas.
       </div>
       <div id="alg-content" style="display:flex;flex-direction:column;gap:14px"></div>
     </div>
@@ -321,7 +347,7 @@ canvas.panning{cursor:grabbing}
       <div class="card">
         <div class="card-title">Mode Latihan Mandiri</div>
         <p style="font-size:12.5px;color:var(--text2); line-height:1.6;">
-          Uji pemahaman Anda! Capai target koordinat di bawah ini dengan menggeser langsung panah vektor di kanvas atau merubah angkanya.
+          Uji pemahaman Anda! Capai target koordinat di bawah ini dengan menggeser panah vektor di layar secara langsung.
         </p>
         <div class="challenge-box" id="challenge-box">
           <div style="font-size:11px; color:var(--text3); margin-bottom:8px; font-weight:700; letter-spacing:1px;">TARGET RESULTAN:</div>
@@ -384,28 +410,19 @@ function fromCanvas(px,py){ return [(px-canvas.width/2-vpX)/zoom, -(py-canvas.he
 function zoomBy(f){ zoom=zoom*f; if(!animRunning) drawScene(1); }
 function resetView(){ autoFit(); if(!animRunning) drawScene(1); }
 
-/* ── INTERACTIVE MOUSE (PANNING & DRAG-AND-DROP) ── */
+/* ── INTERACTIVE DRAG-AND-DROP (MOUSE & TOUCH) ── */
 let isPanning=false, panSX=0, panSY=0, panVX0=0, panVY0=0;
 let dragVec = null;
 
-canvas.addEventListener('wheel',function(e){
-  e.preventDefault();
-  const rect=canvas.getBoundingClientRect();
-  const mx=(e.clientX-rect.left)*(canvas.width/rect.width), my=(e.clientY-rect.top)*(canvas.height/rect.height);
-  const [wx,wy]=fromCanvas(mx,my);
-  zoom = zoom*(e.deltaY<0?1.1:0.9);
-  vpX=(mx-wx*zoom)-canvas.width/2; vpY=-((my+wy*zoom)-canvas.height/2);
-  if(!animRunning) drawScene(1);
-},{passive:false});
-
-canvas.addEventListener('mousedown',function(e){
-  if(e.button!==0 || animRunning) return;
-  const rect=canvas.getBoundingClientRect();
-  const mx=(e.clientX-rect.left)*(canvas.width/rect.width);
-  const my=(e.clientY-rect.top)*(canvas.height/rect.height);
+// Fungsi Helper untuk memproses Mouse/Touch Hitbox
+function handlePointerDown(clientX, clientY) {
+  if(animRunning) return;
+  const rect = canvas.getBoundingClientRect();
+  const mx = (clientX - rect.left) * (canvas.width / rect.width);
+  const my = (clientY - rect.top) * (canvas.height / rect.height);
   
   const {ux,uy,vx,vy,op} = getVals();
-  const radius = 20;
+  const radius = 30; // Radius diperbesar untuk jari HP
 
   if (Math.hypot(mx - toCanvas(ux, uy)[0], my - toCanvas(ux, uy)[1]) < radius) { dragVec = 'u'; return; }
   if ((op==='both' || op==='add' || op==='sub') && Math.hypot(mx - toCanvas(vx, vy)[0], my - toCanvas(vx, vy)[1]) < radius) { dragVec = 'v'; return; }
@@ -417,23 +434,25 @@ canvas.addEventListener('mousedown',function(e){
       if (Math.hypot(mx - toCanvas(ux-vx, uy-vy)[0], my - toCanvas(ux-vx, uy-vy)[1]) < radius) { dragVec = 'v_sub_shifted'; return; }
   }
 
-  isPanning=true; panSX=e.clientX; panSY=e.clientY; panVX0=vpX; panVY0=vpY;
+  isPanning=true; panSX=clientX; panSY=clientY; panVX0=vpX; panVY0=vpY;
   canvas.classList.add('panning');
-});
+}
 
-canvas.addEventListener('mousemove',function(e){
-  const rect=canvas.getBoundingClientRect();
-  const mx=(e.clientX-rect.left)*(canvas.width/rect.width);
-  const my=(e.clientY-rect.top)*(canvas.height/rect.height);
+function handlePointerMove(clientX, clientY, preventDefaultFn) {
+  const rect = canvas.getBoundingClientRect();
+  const mx = (clientX - rect.left) * (canvas.width / rect.width);
+  const my = (clientY - rect.top) * (canvas.height / rect.height);
   
   if(isPanning) {
-      vpX=panVX0+(e.clientX-panSX)*(canvas.width/rect.width);
-      vpY=panVY0-(e.clientY-panSY)*(canvas.height/rect.height);
+      if(preventDefaultFn) preventDefaultFn(); // Cegah scroll layar HP
+      vpX=panVX0+(clientX-panSX)*(canvas.width/rect.width);
+      vpY=panVY0-(clientY-panSY)*(canvas.height/rect.height);
       if(!animRunning) drawScene(1);
       return;
   }
   
   if(dragVec && !animRunning) {
+      if(preventDefaultFn) preventDefaultFn();
       const [wx, wy] = fromCanvas(mx, my);
       const {ux, uy} = getVals();
       let nx = wx, ny = wy;
@@ -451,7 +470,8 @@ canvas.addEventListener('mousemove',function(e){
       return;
   }
   
-  if(!animRunning) {
+  // Hover effect untuk Mouse (mengabaikan touch)
+  if(!animRunning && !preventDefaultFn) {
       let hover = false;
       const {ux, uy, vx, vy, op} = getVals();
       if (Math.hypot(mx - toCanvas(ux, uy)[0], my - toCanvas(ux, uy)[1]) < 20) hover = true;
@@ -464,59 +484,62 @@ canvas.addEventListener('mousemove',function(e){
       const [cx,cy]=fromCanvas(mx, my);
       document.getElementById('coord-info').textContent=`x: ${cx.toFixed(2)}  |  y: ${cy.toFixed(2)}`;
   }
-});
+}
 
-window.addEventListener('mouseup',() => { 
-    isPanning=false; dragVec=null; 
-    canvas.classList.remove('panning'); 
-    canvas.style.cursor = 'grab';
-});
-canvas.addEventListener('mouseleave',()=> { document.getElementById('coord-info').textContent='x: —  |  y: —'; dragVec=null; });
+// Mouse Event Listeners
+canvas.addEventListener('wheel', e => {
+  e.preventDefault();
+  const rect=canvas.getBoundingClientRect();
+  const mx=(e.clientX-rect.left)*(canvas.width/rect.width), my=(e.clientY-rect.top)*(canvas.height/rect.height);
+  const [wx,wy]=fromCanvas(mx,my);
+  zoom = zoom*(e.deltaY<0?1.1:0.9);
+  vpX=(mx-wx*zoom)-canvas.width/2; vpY=-((my+wy*zoom)-canvas.height/2);
+  if(!animRunning) drawScene(1);
+}, {passive:false});
+
+canvas.addEventListener('mousedown', e => { if(e.button===0) handlePointerDown(e.clientX, e.clientY); });
+canvas.addEventListener('mousemove', e => handlePointerMove(e.clientX, e.clientY));
+window.addEventListener('mouseup', () => { isPanning=false; dragVec=null; canvas.classList.remove('panning'); canvas.style.cursor = 'grab'; });
+canvas.addEventListener('mouseleave', () => { document.getElementById('coord-info').textContent='x: —  |  y: —'; dragVec=null; });
+
+// Touch Event Listeners (Mobile Panning & Dragging)
+canvas.addEventListener('touchstart', e => {
+    if(e.touches.length === 1) handlePointerDown(e.touches[0].clientX, e.touches[0].clientY);
+}, {passive: false});
+
+canvas.addEventListener('touchmove', e => {
+    if(e.touches.length === 1) {
+        handlePointerMove(e.touches[0].clientX, e.touches[0].clientY, () => e.preventDefault());
+    }
+}, {passive: false});
+
+canvas.addEventListener('touchend', () => { isPanning=false; dragVec=null; canvas.classList.remove('panning'); });
 
 
 /* ── HIGHLIGHT GEOMETRIS (ALJABAR -> KANVAS) ── */
 let activeHl = null;
-function setHl(val) { 
-    activeHl = val; 
-    if(!animRunning) drawScene(1); 
-}
+function setHl(val) { activeHl = val; if(!animRunning) drawScene(1); }
+function getAlpha(key, defaultAlpha) { return (!activeHl) ? defaultAlpha : (activeHl === key ? 1.0 : defaultAlpha * 0.15); }
+function getLw(key, defaultLw) { return (activeHl === key) ? defaultLw + 2.5 : defaultLw; }
 
-function getAlpha(key, defaultAlpha) {
-    if (!activeHl) return defaultAlpha;
-    if (activeHl === key) return 1.0;
-    return defaultAlpha * 0.15;
-}
-function getLw(key, defaultLw) {
-    if (activeHl === key) return defaultLw + 2.5;
-    return defaultLw;
-}
 
 /* ── MODE TANTANGAN ── */
 let chTarget = {x:0, y:0, op:'add'};
-
 function newChallenge() {
     const ops = ['add', 'sub'];
     chTarget.op = ops[Math.floor(Math.random()*ops.length)];
     chTarget.x = Math.floor(Math.random()*16) - 8;
     chTarget.y = Math.floor(Math.random()*16) - 8;
     
-    document.getElementById('op-sel').value = chTarget.op; 
-    updateUI();
-    
+    document.getElementById('op-sel').value = chTarget.op; updateUI();
     const opStr = chTarget.op === 'add' ? 'u + v' : 'u − v';
     document.getElementById('challenge-target').innerHTML = `${opStr} = ${cv(chTarget.x, chTarget.y, 'var(--text)')}`;
-    
     checkChallenge();
 }
-
 function checkChallenge() {
     const {ux, uy, vx, vy, op} = getVals();
-    if (op !== chTarget.op) {
-        document.getElementById('challenge-status').style.display = 'none';
-        return;
-    }
-    let rx = (op === 'add') ? ux+vx : ux-vx;
-    let ry = (op === 'add') ? uy+vy : uy-vy;
+    if (op !== chTarget.op) { document.getElementById('challenge-status').style.display = 'none'; return; }
+    let rx = (op === 'add') ? ux+vx : ux-vx; let ry = (op === 'add') ? uy+vy : uy-vy;
     
     if (rx === chTarget.x && ry === chTarget.y) {
         document.getElementById('challenge-status').style.display = 'block';
@@ -528,7 +551,7 @@ function checkChallenge() {
 }
 
 
-/* ── HELPERS & UI UPDATE ── */
+/* ── DATA EXTRACTION & AUTO-FIT ── */
 function gv(id){return parseFloat(document.getElementById(id).value) || 0;}
 function getVals(){return{ux:gv('ux'),uy:gv('uy'),vx:gv('vx'),vy:gv('vy'),k:gv('sk'),op:document.getElementById('op-sel').value};}
 function cv(x, y, color) { return `<span class="col-vec" style="color:${color||'inherit'}"><span>${x}</span><span>${y}</span></span>`; }
@@ -621,12 +644,12 @@ function drawPoint(wx,wy,color,alpha){
   const [px,py]=toCanvas(wx,wy);
   ctx.save();
   ctx.globalAlpha = alpha;
-  ctx.beginPath();ctx.arc(px,py,6.5,0,Math.PI*2);
+  ctx.beginPath();ctx.arc(px,py,8,0,Math.PI*2); // Diperbesar sedikit
   ctx.fillStyle=color; ctx.shadowColor=color; ctx.shadowBlur=18; ctx.fill(); ctx.shadowBlur=0;
-  ctx.beginPath();ctx.arc(px,py,6.5,0,Math.PI*2); ctx.strokeStyle=canvasColors.bg; ctx.lineWidth=2; ctx.stroke();
+  ctx.beginPath();ctx.arc(px,py,8,0,Math.PI*2); ctx.strokeStyle=canvasColors.bg; ctx.lineWidth=2; ctx.stroke();
   
   if(alpha > 0.5) {
-      ctx.beginPath();ctx.arc(px,py,3,0,Math.PI*2); ctx.fillStyle=canvasColors.bg; ctx.fill();
+      ctx.beginPath();ctx.arc(px,py,4,0,Math.PI*2); ctx.fillStyle=canvasColors.bg; ctx.fill();
   }
   ctx.restore();
 }
@@ -709,20 +732,20 @@ function computeResult(){
 
 function sec(title,color,body){ return `<div class="alg-section"><h3 style="color:${color}">${title}</h3>${body}</div>`; }
 function step(label,formula,res,bc,hlKey){
-  const evnt = hlKey ? `onmouseenter="setHl('${hlKey}')" onmouseleave="setHl(null)"` : '';
+  // Support sentuhan di HP untuk Highlight Aljabar
+  const evnt = hlKey ? `onmouseenter="setHl('${hlKey}')" onmouseleave="setHl(null)" ontouchstart="setHl('${hlKey}')" ontouchend="setHl(null)"` : '';
   return `<div class="alg-step" style="border-left-color:${bc||'var(--border2)'}" ${evnt}>
     <span class="step-num">${label}</span><div class="formula">${formula}</div>${res?`<div class="result-line" style="color:var(--green)">${res}</div>`:''}
   </div>`;
 }
 function box(val,c, hlKey){
-    const evnt = hlKey ? `onmouseenter="setHl('${hlKey}')" onmouseleave="setHl(null)"` : '';
+    const evnt = hlKey ? `onmouseenter="setHl('${hlKey}')" onmouseleave="setHl(null)" ontouchstart="setHl('${hlKey}')" ontouchend="setHl(null)"` : '';
     return `<div class="alg-box" style="color:${c};border-color:${c}; cursor:pointer;" ${evnt}>${val}</div>`;
 }
 function bold(v,c){return `<b style="color:${c||'var(--text)'}">${v}</b>`;}
 
 function buildAljabar(op,d){
   let html=''; const B='<br>';
-
   let diketahui = step('Vektor u',`u = ${cv(d.ux, d.uy, 'var(--blue)')}`,'','var(--blue)', 'u');
   if(d.vx!==undefined) diketahui += step('Vektor v',`v = ${cv(d.vx, d.vy, 'var(--red)')}`,'','var(--red)', 'v');
   if(op==='scale') diketahui += step('Skalar k',`<b style="color:var(--gold)">k = ${d.k}</b>`,'','var(--gold)');
@@ -734,42 +757,36 @@ function buildAljabar(op,d){
       step('Substitusi nilai',`${cv(d.ux, d.uy)} + ${cv(d.vx, d.vy)}`,`= ${cv(d.rx, d.ry, 'var(--green)')}` ,'var(--blue)', 'res')
     );
     html += box(`u + v = ${cv(d.rx, d.ry, 'var(--green)')}`, 'var(--green)', 'res');
-
-    html += sec('📏 Perhitungan Panjang (Magnitude)','var(--green)',
-      step('Panjang u (|u|)', `= √(${d.ux}² + ${d.uy}²) = √${d.ux*d.ux + d.uy*d.uy}`, `≈ ${bold(d.magU.toFixed(2), 'var(--blue)')}`, 'var(--blue)', 'u') +
-      step('Panjang v (|v|)', `= √(${d.vx}² + ${d.vy}²) = √${d.vx*d.vx + d.vy*d.vy}`, `≈ ${bold(d.magV.toFixed(2), 'var(--red)')}`, 'var(--red)', 'v') +
-      step('Panjang Resultan (|u+v|)', `= √(${d.rx}² + ${d.ry}²) = √${d.rx*d.rx + d.ry*d.ry}`, `≈ ${bold(d.magR.toFixed(2), 'var(--green)')}`, 'var(--green)', 'res')
+    html += sec('📏 Perhitungan Panjang','var(--green)',
+      step('|u|', `= √(${d.ux}² + ${d.uy}²)`, `≈ ${bold(d.magU.toFixed(2), 'var(--blue)')}`, 'var(--blue)', 'u') +
+      step('|v|', `= √(${d.vx}² + ${d.vy}²)`, `≈ ${bold(d.magV.toFixed(2), 'var(--red)')}`, 'var(--red)', 'v') +
+      step('|u+v|', `= √(${d.rx}² + ${d.ry}²)`, `≈ ${bold(d.magR.toFixed(2), 'var(--green)')}`, 'var(--green)', 'res')
     );
-
   } else if(op==='sub'){
     html += sec('➖ Langkah Pengurangan','var(--red)',
       step('Rumus kolom',`u − v = ${cv('u<sub>x</sub>','u<sub>y</sub>')} − ${cv('v<sub>x</sub>','v<sub>y</sub>')} = ${cv('u<sub>x</sub>−v<sub>x</sub>','u<sub>y</sub>−v<sub>y</sub>')}`,'','var(--border2)', 'res')+
       step('Substitusi nilai',`${cv(d.ux, d.uy)} − ${cv(d.vx, d.vy)}`,`= ${cv(d.rx, d.ry, 'var(--green)')}` ,'var(--red)', 'res')
     );
     html += box(`u − v = ${cv(d.rx, d.ry, 'var(--green)')}`, 'var(--green)', 'res');
-
-    html += sec('📏 Perhitungan Panjang (Magnitude)','var(--green)',
-      step('Panjang u (|u|)', `= √(${d.ux}² + ${d.uy}²) = √${d.ux*d.ux + d.uy*d.uy}`, `≈ ${bold(d.magU.toFixed(2), 'var(--blue)')}`, 'var(--blue)', 'u') +
-      step('Panjang v (|v|)', `= √(${d.vx}² + ${d.vy}²) = √${d.vx*d.vx + d.vy*d.vy}`, `≈ ${bold(d.magV.toFixed(2), 'var(--red)')}`, 'var(--red)', 'v') +
-      step('Panjang Resultan (|u−v|)', `= √(${d.rx}² + ${d.ry}²) = √${d.rx*d.rx + d.ry*d.ry}`, `≈ ${bold(d.magR.toFixed(2), 'var(--green)')}`, 'var(--green)', 'res')
+    html += sec('📏 Perhitungan Panjang','var(--green)',
+      step('|u|', `= √(${d.ux}² + ${d.uy}²)`, `≈ ${bold(d.magU.toFixed(2), 'var(--blue)')}`, 'var(--blue)', 'u') +
+      step('|v|', `= √(${d.vx}² + ${d.vy}²)`, `≈ ${bold(d.magV.toFixed(2), 'var(--red)')}`, 'var(--red)', 'v') +
+      step('|u−v|', `= √(${d.rx}² + ${d.ry}²)`, `≈ ${bold(d.magR.toFixed(2), 'var(--green)')}`, 'var(--green)', 'res')
     );
-
   } else if(op==='scale'){
     html += sec('✖ Langkah Perkalian Skalar','var(--gold)',
       step('Rumus kolom',`k · u = k ${cv('u<sub>x</sub>','u<sub>y</sub>')} = ${cv('k·u<sub>x</sub>','k·u<sub>y</sub>')}`,'','var(--border2)', 'res')+
       step('Substitusi nilai',`${d.k} ${cv(d.ux, d.uy)}`,`= ${cv(Number(d.rx.toFixed(3)), Number(d.ry.toFixed(3)), 'var(--gold)')}`, 'var(--gold)', 'res')
     );
     html += box(`${d.k}u = ${cv(Number(d.rx.toFixed(2)), Number(d.ry.toFixed(2)), 'var(--gold)')}`, 'var(--gold)', 'res');
-
-    html += sec('📏 Perhitungan Panjang (Magnitude)','var(--green)',
-      step('Panjang awal u (|u|)', `= √(${d.ux}² + ${d.uy}²) = √${d.ux*d.ux + d.uy*d.uy}`, `≈ ${bold(d.magU.toFixed(2), 'var(--blue)')}`, 'var(--blue)', 'u') +
-      step('Panjang Resultan (|k·u|)', `= |k| × |u| = |${d.k}| × ${d.magU.toFixed(2)}`, `≈ ${bold(d.magR.toFixed(2), 'var(--green)')}`, 'var(--green)', 'res')
+    html += sec('📏 Perhitungan Panjang','var(--green)',
+      step('|u|', `= √(${d.ux}² + ${d.uy}²)`, `≈ ${bold(d.magU.toFixed(2), 'var(--blue)')}`, 'var(--blue)', 'u') +
+      step('|k·u|', `= |k| × |u| = |${d.k}| × ${d.magU.toFixed(2)}`, `≈ ${bold(d.magR.toFixed(2), 'var(--green)')}`, 'var(--green)', 'res')
     );
-
   } else {
     html += sec('📏 Magnitude Kedua Vektor','var(--text2)',
-      step('Panjang u (|u|)', `= √(${d.ux}² + ${d.uy}²) = √${d.ux*d.ux + d.uy*d.uy}`, `≈ ${bold(d.magU.toFixed(2), 'var(--blue)')}`, 'var(--blue)', 'u') +
-      step('Panjang v (|v|)', `= √(${d.vx}² + ${d.vy}²) = √${d.vx*d.vx + d.vy*d.vy}`, `≈ ${bold(d.magV.toFixed(2), 'var(--red)')}`, 'var(--red)', 'v')
+      step('|u|', `= √(${d.ux}² + ${d.uy}²) = √${d.ux*d.ux + d.uy*d.uy}`, `≈ ${bold(d.magU.toFixed(2), 'var(--blue)')}`, 'var(--blue)', 'u') +
+      step('|v|', `= √(${d.vx}² + ${d.vy}²) = √${d.vx*d.vx + d.vy*d.vy}`, `≈ ${bold(d.magV.toFixed(2), 'var(--red)')}`, 'var(--red)', 'v')
     );
     html += sec('📐 Sudut Antar Vektor','var(--gold)',
       step('Dot product u·v',`= (u<sub>x</sub>×v<sub>x</sub>) + (u<sub>y</sub>×v<sub>y</sub>) = ${bold(d.dot,'var(--gold)')}`, '','var(--gold)')+
@@ -779,28 +796,19 @@ function buildAljabar(op,d){
   document.getElementById('alg-content').innerHTML=html;
 }
 
-/* ── MAIN UPDATE LOOP ── */
 function upd(doAutoFit = true){
   if(animRunning) return;
-  computeResult();
-  if(doAutoFit) autoFit();
-  checkChallenge();
-  drawScene(1);
+  computeResult(); if(doAutoFit) autoFit(); checkChallenge(); drawScene(1);
 }
 
-/* ── ANIMATION ── */
 let animRunning=false,animRaf=null;
 function runAnim(){
   const btn=document.getElementById('btn-anim');
   if(animRunning){
-    animRunning=false;cancelAnimationFrame(animRaf);
-    btn.textContent='▶ Jalankan Animasi';
-    document.getElementById('anim-prog').style.width='0%';
+    animRunning=false;cancelAnimationFrame(animRaf); btn.textContent='▶ Jalankan Animasi'; document.getElementById('anim-prog').style.width='0%';
     drawScene(1);return;
   }
-  animRunning=true;btn.textContent='⏹ Stop';
-  computeResult(); autoFit();
-  
+  animRunning=true;btn.textContent='⏹ Stop'; computeResult(); autoFit();
   const dur=1100,start=performance.now(),prog=document.getElementById('anim-prog');
   function frame(now){
     if(!animRunning) return;
@@ -816,16 +824,14 @@ function runAnim(){
 function resetAll(){
   document.getElementById('ux').value = 3; document.getElementById('uy').value = 2;
   document.getElementById('vx').value = 1; document.getElementById('vy').value = 4;
-  document.getElementById('sk').value = 2;
-  document.getElementById('op-sel').value='add';
+  document.getElementById('sk').value = 2; document.getElementById('op-sel').value='add';
   updateUI(); upd();
 }
 
 function switchTab(id,el){
   document.querySelectorAll('.tab-body').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('tab-'+id).classList.add('active');
-  el.classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active'); el.classList.add('active');
 }
 
 function closePopup(){
@@ -834,11 +840,7 @@ function closePopup(){
   ov.addEventListener('animationend',()=>ov.style.display='none',{once:true});
 }
 
-/* ── INIT ── */
-resizeCanvas();
-updateUI(); 
-newChallenge();
-upd();
+resizeCanvas(); updateUI(); newChallenge(); upd();
 </script>
 </body>
 </html>
